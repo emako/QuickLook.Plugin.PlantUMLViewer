@@ -48,8 +48,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <None Remove="plantuml.jar" />
-      <None Remove="QuickLook.Plugin.Metadata.config" />
+        <None Remove="plantuml.jar" />
+        <None Remove="QuickLook.Plugin.Metadata.config" />
     </ItemGroup>
 
     <ItemGroup>
@@ -58,12 +58,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="jebbs.plantuml-2.18.1\plantuml.jar">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <Content Include="QuickLook.Plugin.Metadata.config">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
+        <Content Include="jebbs.plantuml-2.18.1\plantuml.jar">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="QuickLook.Plugin.Metadata.config">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
 </Project>
