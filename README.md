@@ -19,6 +19,12 @@ The following file extensions are treated as PlantUML files.
  - https://github.com/TachyPochy/plantuml-quicklook
  - https://github.com/well-ar/vscode-plantuml
 
+## Privacy Policy
+
+==IMPORTANT==
+
+If you do not have Java installed and can start Java directly in the environment variable, it will automatically be rendered by the server.
+
 ## Licenses
 
 ![GPL-v3](https://www.gnu.org/graphics/gplv3-127x51.png)
