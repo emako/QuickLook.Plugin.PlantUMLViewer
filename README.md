@@ -23,7 +23,7 @@ The following file extensions are treated as PlantUML files.
 ## Privacy Policy
 
 > [!IMPORTANT]
-> If you do not have Java installed and can start Java directly in the environment variable, it will automatically be rendered by the server.
+> If you do not have Java installed and can start Java directly in the environment variable, it will automatically be rendered by the [server](http://www.plantuml.com/plantuml).
 
 ## Licenses
 
