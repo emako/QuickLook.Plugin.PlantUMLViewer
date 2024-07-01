@@ -24,7 +24,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 
-namespace QuickLook.Plugin.ImageViewer.AnimatedImage.Providers;
+namespace QuickLook.Plugin.PlantUMLViewer.AnimatedImage.Providers;
 
 internal class NativeProvider : AnimationProvider
 {

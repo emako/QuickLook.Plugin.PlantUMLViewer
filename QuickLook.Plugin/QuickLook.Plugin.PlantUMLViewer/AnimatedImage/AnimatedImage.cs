@@ -24,7 +24,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace QuickLook.Plugin.ImageViewer.AnimatedImage;
+namespace QuickLook.Plugin.PlantUMLViewer.AnimatedImage;
 
 public class AnimatedImage : Image, IDisposable
 {

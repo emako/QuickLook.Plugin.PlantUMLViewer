@@ -18,6 +18,7 @@ The following file extensions are treated as PlantUML files.
 
  - https://github.com/TachyPochy/plantuml-quicklook
  - https://github.com/well-ar/vscode-plantuml
+ - https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml
 
 ## Privacy Policy
 

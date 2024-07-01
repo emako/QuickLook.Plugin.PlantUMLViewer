@@ -22,7 +22,7 @@ using System.Windows;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 
-namespace QuickLook.Plugin.ImageViewer.AnimatedImage;
+namespace QuickLook.Plugin.PlantUMLViewer.AnimatedImage;
 
 internal abstract class AnimationProvider : IDisposable
 {

@@ -22,7 +22,7 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Media.Imaging;
 
-namespace QuickLook.Plugin.ImageViewer;
+namespace QuickLook.Plugin.PlantUMLViewer;
 
 internal class Helper
 {

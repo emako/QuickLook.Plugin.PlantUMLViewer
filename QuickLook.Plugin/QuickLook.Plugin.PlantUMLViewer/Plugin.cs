@@ -17,7 +17,7 @@
 
 using QuickLook.Common.Helpers;
 using QuickLook.Common.Plugin;
-using QuickLook.Plugin.ImageViewer;
+using QuickLook.Plugin.PlantUMLViewer;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -31,7 +31,7 @@ using System.Windows.Markup;
 using System.Windows.Media.Imaging;
 using System.Xml.Linq;
 
-namespace QuickLook.Plugin.BinaryViewer;
+namespace QuickLook.Plugin.PlantUMLViewer;
 
 public class Plugin : IViewer
 {

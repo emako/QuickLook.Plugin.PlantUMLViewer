@@ -28,7 +28,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using MediaPixelFormats = System.Windows.Media.PixelFormats;
 
-namespace QuickLook.Plugin.ImageViewer.AnimatedImage.Providers;
+namespace QuickLook.Plugin.PlantUMLViewer.AnimatedImage.Providers;
 
 internal class ImageMagickProvider : AnimationProvider
 {

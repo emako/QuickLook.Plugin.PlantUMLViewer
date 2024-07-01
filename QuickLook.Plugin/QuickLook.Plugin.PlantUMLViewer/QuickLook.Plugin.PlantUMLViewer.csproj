@@ -48,22 +48,46 @@
     </PropertyGroup>
 
     <ItemGroup>
+	    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="13.9.1" />
+    </ItemGroup>
+
+	<ItemGroup>
+        <None Remove="exiv2-ql-32.dll" />
+        <None Remove="exiv2-ql-64.dll" />
         <None Remove="plantuml.jar" />
         <None Remove="QuickLook.Plugin.Metadata.config" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\QuickLook.Common\QuickLook.Common.csproj" />
-        <ProjectReference Include="..\QuickLook.Plugin.ImageViewer\QuickLook.Plugin.ImageViewer.csproj" />
+	    <Resource Include="Resources\background-b.png" />
+	    <Resource Include="Resources\background.png" />
     </ItemGroup>
 
     <ItemGroup>
-        <Content Include="jebbs.plantuml-2.18.1\plantuml.jar">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Content Include="QuickLook.Plugin.Metadata.config">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
+	    <Content Include="exiv2-ql-32.dll">
+		    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	    </Content>
+	    <Content Include="exiv2-ql-64.dll">
+		    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	    </Content>
+	    <Content Include="jebbs.plantuml-2.18.1\plantuml.jar">
+		    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	    </Content>
+	    <Content Include="QuickLook.Plugin.Metadata.config">
+		    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	    </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+	    <Reference Include="LibAPNG">
+		    <HintPath>.\LibAPNG.dll</HintPath>
+	    </Reference>
+	    <Reference Include="WindowsBase" />
+    </ItemGroup>
+
+	<ItemGroup>
+        <ProjectReference Include="..\..\QuickLook.Common\QuickLook.Common.csproj" />
+        <!--<ProjectReference Include="..\QuickLook.Plugin.ImageViewer\QuickLook.Plugin.ImageViewer.csproj" />-->
     </ItemGroup>
 
 </Project>
