@@ -9,7 +9,8 @@
         <SignAssembly>false</SignAssembly>
 	    <UseWPF>true</UseWPF>
 	    <LangVersion>12.0</LangVersion>
-		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+	    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+	    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
@@ -49,6 +50,7 @@
 
     <ItemGroup>
 	    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="13.9.1" />
+	    <PackageReference Include="System.Memory" Version="4.5.4" />
     </ItemGroup>
 
 	<ItemGroup>

@@ -90,6 +90,7 @@ public class Plugin : IViewer
             bitmap.StreamSource = stream;
             bitmap.EndInit();
             bitmap.Freeze();
+
             _ip.Dispatcher.Invoke(() => _ip.Source = bitmap);
 
             //string svg = Path.ChangeExtension(path, ".svg");

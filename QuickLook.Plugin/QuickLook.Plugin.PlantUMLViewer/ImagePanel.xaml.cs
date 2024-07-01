@@ -65,6 +65,7 @@ public partial class ImagePanel : UserControl, INotifyPropertyChanged, IDisposab
 
     private Visibility _copyVisibility = Visibility.Visible;
     private Visibility _saveAsVisibility = Visibility.Visible;
+    private Visibility _reverseColorVisibility = Visibility.Visible;
 
     public ImagePanel()
     {
@@ -75,6 +76,8 @@ public partial class ImagePanel : UserControl, INotifyPropertyChanged, IDisposab
         buttonCopy.Click += OnCopyOnClick;
 
         buttonSaveAs.Click += OnSaveAsOnClick;
+
+        buttonReverseColor.Click += OnReverseColorOnClick;
 
         buttonMeta.Click += (sender, e) =>
             textMeta.Visibility = textMeta.Visibility == Visibility.Collapsed
@@ -181,6 +184,16 @@ public partial class ImagePanel : UserControl, INotifyPropertyChanged, IDisposab
         }
     }
 
+    public Visibility ReverseColorVisibility
+    {
+        get => _reverseColorVisibility;
+        set
+        {
+            _reverseColorVisibility = value;
+            OnPropertyChanged();
+        }
+    }
+
     public Visibility MetaIconVisibility
     {
         get => _metaIconVisibility;
@@ -266,7 +279,23 @@ public partial class ImagePanel : UserControl, INotifyPropertyChanged, IDisposab
         get => _source;
         set
         {
-            _source = value;
+            if (_source == null)
+            {
+                Theme = (Themes)SettingHelper.Get("LastTheme", (int)Theme, "QuickLook.Plugin.ImageViewer");
+
+                if (Theme == Themes.Dark)
+                {
+                    _source = InvertColors(value);
+                }
+                else
+                {
+                    _source = value;
+                }
+            }
+            else
+            {
+                _source = value;
+            }
             OnPropertyChanged();
 
             if (ImageUriSource == null)
@@ -322,6 +351,11 @@ public partial class ImagePanel : UserControl, INotifyPropertyChanged, IDisposab
 
     private void OnSaveAsOnClick(object sender, RoutedEventArgs e)
     {
+        if (_source == null)
+        {
+            return;
+        }
+
         var dialog = new SaveFileDialog()
         {
             Filter = "PNG Image|*.png",
@@ -348,6 +382,52 @@ public partial class ImagePanel : UserControl, INotifyPropertyChanged, IDisposab
                 ///
             }
         }
+    }
+
+    private void OnReverseColorOnClick(object sender, RoutedEventArgs e)
+    {
+        if (_source == null)
+        {
+            return;
+        }
+
+        Source = InvertColors(_source);
+    }
+
+    private static BitmapSource InvertColors(BitmapSource source)
+    {
+        WriteableBitmap writableBitmap = new(source);
+        writableBitmap.Lock();
+
+        nint pBackBuffer = writableBitmap.BackBuffer;
+        int stride = writableBitmap.BackBufferStride;
+        int width = writableBitmap.PixelWidth;
+        int height = writableBitmap.PixelHeight;
+        int bytesPerPixel = (writableBitmap.Format.BitsPerPixel + 7) / 8;
+
+        unsafe
+        {
+            byte* pPixels = (byte*)pBackBuffer;
+
+            for (int y = 0; y < height; y++)
+            {
+                Span<byte> row = new(pPixels + y * stride, width * bytesPerPixel);
+
+                for (int x = 0; x < width; x++)
+                {
+                    int index = x * bytesPerPixel;
+
+                    row[index] = (byte)(255 - row[index]);
+                    row[index + 1] = (byte)(255 - row[index + 1]);
+                    row[index + 2] = (byte)(255 - row[index + 2]);
+                }
+            }
+        }
+
+        writableBitmap.AddDirtyRect(new Int32Rect(0, 0, width, height));
+        writableBitmap.Unlock();
+
+        return writableBitmap;
     }
 
     private void OnBackgroundColourOnClick(object sender, RoutedEventArgs e)

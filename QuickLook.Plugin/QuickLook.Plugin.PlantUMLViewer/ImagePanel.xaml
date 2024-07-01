@@ -101,7 +101,6 @@
                     Content="&#xE8c8;"
                     Style="{StaticResource CaptionButtonStyle}"
                     Visibility="{Binding ElementName=imagePanel, Path=CopyVisibility}" />
-
             <Button x:Name="buttonSaveAs"
                     Width="24"
                     Height="24"
@@ -111,6 +110,15 @@
                     Content="&#xE792;"
                     Style="{StaticResource CaptionButtonStyle}"
                     Visibility="{Binding ElementName=imagePanel, Path=SaveAsVisibility}" />
+            <Button x:Name="buttonReverseColor"
+                    Width="24"
+                    Height="24"
+                    Margin="0,8,8,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Content="&#xE746;"
+                    Style="{StaticResource CaptionButtonStyle}"
+                    Visibility="{Binding ElementName=imagePanel, Path=ReverseColorVisibility}" />
             <Button x:Name="buttonMeta"
                     Width="24"
                     Height="24"
