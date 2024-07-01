@@ -91,26 +91,45 @@
             </Border.Resources>
         </Border>
 
-        <Button x:Name="buttonMeta"
-                Width="24"
-                Height="24"
-                Margin="0,8,40,0"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Top"
-                Content="&#xE946;"
-                Style="{StaticResource CaptionButtonStyle}"
-                Visibility="{Binding ElementName=imagePanel, Path=MetaIconVisibility}" />
+        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button x:Name="buttonCopy"
+                    Width="24"
+                    Height="24"
+                    Margin="0,8,8,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Content="&#xE8c8;"
+                    Style="{StaticResource CaptionButtonStyle}"
+                    Visibility="{Binding ElementName=imagePanel, Path=CopyVisibility}" />
 
-        <Button x:Name="buttonBackgroundColour"
-                Width="24"
-                Height="24"
-                Margin="0,8,8,0"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Top"
-                Content="&#xEF1F;"
-                Style="{StaticResource CaptionButtonStyle}"
-                Visibility="{Binding ElementName=imagePanel, Path=BackgroundVisibility}" />
-
+            <Button x:Name="buttonSaveAs"
+                    Width="24"
+                    Height="24"
+                    Margin="0,8,8,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Content="&#xE792;"
+                    Style="{StaticResource CaptionButtonStyle}"
+                    Visibility="{Binding ElementName=imagePanel, Path=SaveAsVisibility}" />
+            <Button x:Name="buttonMeta"
+                    Width="24"
+                    Height="24"
+                    Margin="0,8,8,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Content="&#xE946;"
+                    Style="{StaticResource CaptionButtonStyle}"
+                    Visibility="{Binding ElementName=imagePanel, Path=MetaIconVisibility}" />
+            <Button x:Name="buttonBackgroundColour"
+                    Width="24"
+                    Height="24"
+                    Margin="0,8,8,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Content="&#xEF1F;"
+                    Style="{StaticResource CaptionButtonStyle}"
+                    Visibility="{Binding ElementName=imagePanel, Path=BackgroundVisibility}" />
+        </StackPanel>
         <TextBlock x:Name="textMeta"
                    Margin="0,40,8,0"
                    Padding="5,5,5,5"
