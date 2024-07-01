@@ -51,6 +51,10 @@
     <ItemGroup>
 	    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="13.9.1" />
 	    <PackageReference Include="System.Memory" Version="4.5.4" />
+	    <PackageReference Include="Costura.Fody" Version="5.7.0" Condition=" '$(Configuration)' == 'Release'">
+		    <PrivateAssets>all</PrivateAssets>
+		    <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	    </PackageReference>
     </ItemGroup>
 
 	<ItemGroup>
