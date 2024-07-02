@@ -32,18 +32,15 @@ namespace QuickLook.Plugin.PlantUMLViewer.AnimatedImage.Providers;
 
 internal class APngProvider : AnimationProvider
 {
-    private readonly Frame _baseFrame;
-    private readonly List<FrameInfo> _frames;
-    private readonly List<BitmapSource> _renderedFrames;
+    private readonly Frame _baseFrame = null!;
+    private readonly List<FrameInfo> _frames = null!;
+    private readonly List<BitmapSource> _renderedFrames = null!;
     private int _lastEffectivePreviousPreviousFrameIndex;
-    private NativeProvider _nativeImageProvider;
 
     public APngProvider(Uri path, MetaProvider meta, ContextObject contextObject) : base(path, meta, contextObject)
     {
         if (!IsAnimatedPng(path.LocalPath))
         {
-            _nativeImageProvider = new NativeProvider(path, meta, contextObject);
-            Animator = _nativeImageProvider.Animator;
             return;
         }
 
@@ -52,7 +49,7 @@ internal class APngProvider : AnimationProvider
         _baseFrame = decoder.DefaultImage;
         _frames = new List<FrameInfo>(decoder.Frames.Length);
         _renderedFrames = new List<BitmapSource>(decoder.Frames.Length);
-        Enumerable.Repeat(0, decoder.Frames.Length).ForEach(_ => _renderedFrames.Add(null));
+        Enumerable.Repeat(0, decoder.Frames.Length).ForEach(_ => _renderedFrames.Add(null!));
 
         Animator = new Int32AnimationUsingKeyFrames { RepeatBehavior = RepeatBehavior.Forever };
 
@@ -71,9 +68,6 @@ internal class APngProvider : AnimationProvider
 
     public override Task<BitmapSource> GetThumbnail(Size renderSize)
     {
-        if (_nativeImageProvider != null)
-            return _nativeImageProvider.GetThumbnail(renderSize);
-
         return new Task<BitmapSource>(() =>
         {
             var bs = _baseFrame.GetBitmapSource();
@@ -85,9 +79,6 @@ internal class APngProvider : AnimationProvider
 
     public override Task<BitmapSource> GetRenderedFrame(int index)
     {
-        if (_nativeImageProvider != null)
-            return _nativeImageProvider.GetRenderedFrame(index);
-
         if (_renderedFrames[index] != null)
             return new Task<BitmapSource>(() => _renderedFrames[index]);
 
@@ -102,13 +93,6 @@ internal class APngProvider : AnimationProvider
 
     public override void Dispose()
     {
-        if (_nativeImageProvider != null)
-        {
-            _nativeImageProvider.Dispose();
-            _nativeImageProvider = null;
-            return;
-        }
-
         _frames.Clear();
         _renderedFrames.Clear();
     }
@@ -116,9 +100,9 @@ internal class APngProvider : AnimationProvider
     private BitmapSource Render(int index)
     {
         var currentFrame = _frames[index];
-        FrameInfo previousFrame = null;
-        BitmapSource previousRendered = null;
-        BitmapSource previousPreviousRendered = null;
+        FrameInfo previousFrame = null!;
+        BitmapSource previousRendered = null!;
+        BitmapSource previousPreviousRendered = null!;
 
         if (index > 0)
         {
@@ -186,35 +170,33 @@ internal class APngProvider : AnimationProvider
 
     private static bool IsAnimatedPng(string path)
     {
-        using (var br = new BinaryReader(new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
+        using var br = new BinaryReader(new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+        if (br.BaseStream.Length < 8 + 4)
+            return false;
+
+        uint nextChunk = 8; // skip header
+
+        while (nextChunk > 0 && nextChunk < br.BaseStream.Length)
         {
-            if (br.BaseStream.Length < 8 + 4)
+            br.BaseStream.Position = nextChunk;
+
+            var data_size = ToUInt32BE(br.ReadBytes(4)); // data size in BE
+
+            var window = br.ReadBytes(4); // label
+
+            if (window[0] == 'I' && window[1] == 'D' && window[2] == 'A' && window[3] == 'T')
                 return false;
 
-            uint nextChunk = 8; // skip header
+            if (window[0] == 'a' && window[1] == 'c' && window[2] == 'T' && window[3] == 'L')
+                return true;
 
-            while (nextChunk > 0 && nextChunk < br.BaseStream.Length)
-            {
-                br.BaseStream.Position = nextChunk;
-
-                var data_size = ToUInt32BE(br.ReadBytes(4)); // data size in BE
-
-                var window = br.ReadBytes(4); // label
-
-                if (window[0] == 'I' && window[1] == 'D' && window[2] == 'A' && window[3] == 'T')
-                    return false;
-
-                if (window[0] == 'a' && window[1] == 'c' && window[2] == 'T' && window[3] == 'L')
-                    return true;
-
-                // *[Data Size] + Data Size + Label + CRC
-                nextChunk += data_size + 4 + 4 + 4;
-            }
-
-            return false;
+            // *[Data Size] + Data Size + Label + CRC
+            nextChunk += data_size + 4 + 4 + 4;
         }
 
-        uint ToUInt32BE(byte[] data)
+        return false;
+
+        static uint ToUInt32BE(byte[] data)
         {
             Array.Reverse(data);
             return BitConverter.ToUInt32(data, 0);

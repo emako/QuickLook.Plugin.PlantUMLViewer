@@ -49,7 +49,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-	    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="13.9.1" />
 	    <PackageReference Include="System.Memory" Version="4.5.4" />
 	    <PackageReference Include="Costura.Fody" Version="5.7.0" Condition=" '$(Configuration)' == 'Release'">
 		    <PrivateAssets>all</PrivateAssets>
@@ -58,8 +57,6 @@
     </ItemGroup>
 
 	<ItemGroup>
-        <None Remove="exiv2-ql-32.dll" />
-        <None Remove="exiv2-ql-64.dll" />
         <None Remove="plantuml.jar" />
         <None Remove="QuickLook.Plugin.Metadata.config" />
     </ItemGroup>
@@ -70,12 +67,6 @@
     </ItemGroup>
 
     <ItemGroup>
-	    <Content Include="exiv2-ql-32.dll">
-		    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	    </Content>
-	    <Content Include="exiv2-ql-64.dll">
-		    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	    </Content>
 	    <Content Include="jebbs.plantuml-2.18.1\plantuml.jar">
 		    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	    </Content>
@@ -88,12 +79,10 @@
 	    <Reference Include="LibAPNG">
 		    <HintPath>.\LibAPNG.dll</HintPath>
 	    </Reference>
-	    <Reference Include="WindowsBase" />
     </ItemGroup>
 
 	<ItemGroup>
         <ProjectReference Include="..\..\QuickLook.Common\QuickLook.Common.csproj" />
-        <!--<ProjectReference Include="..\QuickLook.Plugin.ImageViewer\QuickLook.Plugin.ImageViewer.csproj" />-->
     </ItemGroup>
 
 </Project>

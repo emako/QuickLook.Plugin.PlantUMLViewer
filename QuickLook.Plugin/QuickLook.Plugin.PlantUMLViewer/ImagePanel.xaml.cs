@@ -45,18 +45,18 @@ namespace QuickLook.Plugin.PlantUMLViewer;
 public partial class ImagePanel : UserControl, INotifyPropertyChanged, IDisposable
 {
     private Visibility _backgroundVisibility = Visibility.Visible;
-    private ContextObject _contextObject;
-    private Point? _dragInitPos;
-    private Uri _imageSource;
+    private ContextObject _contextObject = null!;
+    private Point? _dragInitPos = null!;
+    private Uri _imageSource = null!;
     private bool _isZoomFactorFirstSet = true;
     private DateTime _lastZoomTime = DateTime.MinValue;
     private double _maxZoomFactor = 3d;
-    private MetaProvider _meta;
+    private MetaProvider _meta = null!;
     private Visibility _metaIconVisibility = Visibility.Collapsed;
     private double _minZoomFactor = 0.1d;
     private BitmapScalingMode _renderMode = BitmapScalingMode.Linear;
     private bool _showZoomLevelInfo = true;
-    private BitmapSource _source;
+    private BitmapSource _source = null!;
     private double _zoomFactor = 1d;
 
     private bool _zoomToFit = true;
@@ -104,10 +104,6 @@ public partial class ImagePanel : UserControl, INotifyPropertyChanged, IDisposab
     {
         ContextObject = context;
         Meta = meta;
-
-        var s = meta.GetSize();
-        //_minZoomFactor = Math.Min(200d / s.Height, 400d / s.Width);
-        //_maxZoomFactor = Math.Min(9000d / s.Height, 9000d / s.Width);
 
         ShowMeta();
         Theme = ContextObject.Theme;
@@ -330,7 +326,7 @@ public partial class ImagePanel : UserControl, INotifyPropertyChanged, IDisposab
         viewPanelImage = null;
     }
 
-    public event PropertyChangedEventHandler PropertyChanged;
+    public event PropertyChangedEventHandler PropertyChanged = null!;
 
     private void OnCopyOnClick(object sender, RoutedEventArgs e)
     {
@@ -439,25 +435,11 @@ public partial class ImagePanel : UserControl, INotifyPropertyChanged, IDisposab
 
     private void ShowMeta()
     {
-        textMeta.Inlines.Clear();
-        Meta.GetExif().Values.ForEach(m =>
-        {
-            if (string.IsNullOrWhiteSpace(m.Item1) || string.IsNullOrWhiteSpace(m.Item2))
-                return;
-
-            textMeta.Inlines.Add(new Run(m.Item1) { FontWeight = FontWeights.SemiBold });
-            textMeta.Inlines.Add(": ");
-            textMeta.Inlines.Add(m.Item2);
-            textMeta.Inlines.Add("\r\n");
-        });
-        textMeta.Inlines.Remove(textMeta.Inlines.LastInline);
-        if (!textMeta.Inlines.Any())
-            MetaIconVisibility = Visibility.Collapsed;
     }
 
-    public event EventHandler<int> ImageScrolled;
+    public event EventHandler<int> ImageScrolled = null!;
 
-    public event EventHandler ZoomChanged;
+    public event EventHandler ZoomChanged = null!;
 
     private void ImagePanel_SizeChanged(object sender, SizeChangedEventArgs e)
     {
@@ -661,7 +643,7 @@ public partial class ImagePanel : UserControl, INotifyPropertyChanged, IDisposab
     }
 
     [NotifyPropertyChangedInvocator]
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null!)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }

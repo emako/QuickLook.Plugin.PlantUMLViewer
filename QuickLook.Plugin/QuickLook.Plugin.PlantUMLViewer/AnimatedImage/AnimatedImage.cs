@@ -29,9 +29,9 @@ namespace QuickLook.Plugin.PlantUMLViewer.AnimatedImage;
 public class AnimatedImage : Image, IDisposable
 {
     // List<Pair<formats, type>>
-    public static List<KeyValuePair<string[], Type>> Providers = new List<KeyValuePair<string[], Type>>();
+    public static List<KeyValuePair<string[], Type>> Providers = [];
 
-    private AnimationProvider _animation;
+    private AnimationProvider _animation = null!;
     private bool _disposing;
 
     public void Dispose()
@@ -42,12 +42,12 @@ public class AnimatedImage : Image, IDisposable
         Source = null;
 
         _animation?.Dispose();
-        _animation = null;
+        _animation = null!;
     }
 
-    public event EventHandler ImageLoaded;
+    public event EventHandler ImageLoaded = null!;
 
-    public event EventHandler DoZoomToFit;
+    public event EventHandler DoZoomToFit = null!;
 
     private static AnimationProvider InitAnimationProvider(Uri path, MetaProvider meta, ContextObject contextObject)
     {
@@ -101,11 +101,8 @@ public class AnimatedImage : Image, IDisposable
 
     private static void AnimationUriChanged(DependencyObject obj, DependencyPropertyChangedEventArgs ev)
     {
-        if (!(obj is AnimatedImage instance))
+        if (obj is not AnimatedImage instance)
             return;
-
-        //var thumbnail = instance.Meta?.GetThumbnail(true);
-        //instance.Source = thumbnail;
 
         instance._animation = InitAnimationProvider((Uri)ev.NewValue, instance.Meta, instance.ContextObject);
         ShowThumbnailAndStartAnimation(instance);
@@ -125,8 +122,8 @@ public class AnimatedImage : Image, IDisposable
 
             if (_.Result != null)
             {
-                instance.DoZoomToFit?.Invoke(instance, new EventArgs());
-                instance.ImageLoaded?.Invoke(instance, new EventArgs());
+                instance.DoZoomToFit?.Invoke(instance, EventArgs.Empty);
+                instance.ImageLoaded?.Invoke(instance, EventArgs.Empty);
             }
 
             instance.BeginAnimation(AnimationFrameIndexProperty, instance._animation?.Animator);
@@ -136,7 +133,7 @@ public class AnimatedImage : Image, IDisposable
 
     private static void AnimationFrameIndexChanged(DependencyObject obj, DependencyPropertyChangedEventArgs ev)
     {
-        if (!(obj is AnimatedImage instance))
+        if (obj is not AnimatedImage instance)
             return;
 
         if (instance._disposing)
@@ -155,8 +152,8 @@ public class AnimatedImage : Image, IDisposable
 
             if (firstLoad)
             {
-                instance.DoZoomToFit?.Invoke(instance, new EventArgs());
-                instance.ImageLoaded?.Invoke(instance, new EventArgs());
+                instance.DoZoomToFit?.Invoke(instance, EventArgs.Empty);
+                instance.ImageLoaded?.Invoke(instance, EventArgs.Empty);
             }
         }));
         task.Start();
