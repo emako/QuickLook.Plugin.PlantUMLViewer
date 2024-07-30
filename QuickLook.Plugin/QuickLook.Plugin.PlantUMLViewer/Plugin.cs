@@ -17,7 +17,6 @@
 
 using QuickLook.Common.Helpers;
 using QuickLook.Common.Plugin;
-using QuickLook.Plugin.PlantUMLViewer;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -27,9 +26,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Markup;
 using System.Windows.Media.Imaging;
-using System.Xml.Linq;
 
 namespace QuickLook.Plugin.PlantUMLViewer;
 
