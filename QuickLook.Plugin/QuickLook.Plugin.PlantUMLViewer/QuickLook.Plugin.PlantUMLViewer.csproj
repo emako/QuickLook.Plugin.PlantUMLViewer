@@ -7,10 +7,11 @@
         <AssemblyName>QuickLook.Plugin.PlantUMLViewer</AssemblyName>
         <FileAlignment>512</FileAlignment>
         <SignAssembly>false</SignAssembly>
-	    <UseWPF>true</UseWPF>
-	    <LangVersion>12.0</LangVersion>
-	    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-	    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+        <UseWPF>true</UseWPF>
+        <LangVersion>12.0</LangVersion>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
@@ -49,39 +50,39 @@
     </PropertyGroup>
 
     <ItemGroup>
-	    <PackageReference Include="System.Memory" Version="4.5.4" />
-	    <PackageReference Include="Costura.Fody" Version="5.7.0" Condition=" '$(Configuration)' == 'Release'">
-		    <PrivateAssets>all</PrivateAssets>
-		    <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	    </PackageReference>
+        <PackageReference Include="System.Memory" Version="4.5.4" />
+        <PackageReference Include="Costura.Fody" Version="5.7.0" Condition=" '$(Configuration)' == 'Release'">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
     </ItemGroup>
 
-	<ItemGroup>
+    <ItemGroup>
         <None Remove="plantuml.jar" />
         <None Remove="QuickLook.Plugin.Metadata.config" />
     </ItemGroup>
 
     <ItemGroup>
-	    <Resource Include="Resources\background-b.png" />
-	    <Resource Include="Resources\background.png" />
+        <Resource Include="Resources\background-b.png" />
+        <Resource Include="Resources\background.png" />
     </ItemGroup>
 
     <ItemGroup>
-	    <Content Include="jebbs.plantuml-2.18.1\plantuml.jar">
-		    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	    </Content>
-	    <Content Include="QuickLook.Plugin.Metadata.config">
-		    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	    </Content>
+        <Content Include="jebbs.plantuml-2.18.1\plantuml.jar">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="QuickLook.Plugin.Metadata.config">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>
-	    <Reference Include="LibAPNG">
-		    <HintPath>.\LibAPNG.dll</HintPath>
-	    </Reference>
+        <Reference Include="LibAPNG">
+            <HintPath>.\LibAPNG.dll</HintPath>
+        </Reference>
     </ItemGroup>
 
-	<ItemGroup>
+    <ItemGroup>
         <ProjectReference Include="..\..\QuickLook.Common\QuickLook.Common.csproj" />
     </ItemGroup>
 
