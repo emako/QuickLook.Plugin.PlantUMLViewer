@@ -123,11 +123,11 @@ public class Plugin : IViewer
         string text = File.ReadAllText(path);
         byte[] src = Encoding.Default.GetBytes(text);
 
-        string plantUml = @".\QuickLook.Plugin\QuickLook.Plugin.PlantUMLViewer\jebbs.plantuml-2.18.1\plantuml.jarplantuml.jar";
+        string plantUml = @".\QuickLook.Plugin\QuickLook.Plugin.PlantUMLViewer\jebbs.plantuml-2.18.1\plantuml.jar";
 
         if (!File.Exists(plantUml))
         {
-            plantUml = Path.Combine(SettingHelper.LocalDataPath, @"QuickLook.Plugin\QuickLook.Plugin.PlantUMLViewer\jebbs.plantuml-2.18.1\plantuml.jarplantuml.jar");
+            plantUml = Path.Combine(SettingHelper.LocalDataPath, @"QuickLook.Plugin\QuickLook.Plugin.PlantUMLViewer\jebbs.plantuml-2.18.1\plantuml.jar");
         }
 
         using Process process = new()
@@ -179,7 +179,7 @@ file static class Tools
 
         process.Start();
         process.WaitForExit();
-        var d = process.StandardOutput.ReadToEnd();
+        //var d = process.StandardOutput.ReadToEnd();
         return process.StandardOutput.ReadToEnd().Length >= 1;
     }
 }
