@@ -42,7 +42,6 @@ public class Plugin : IViewer
     private static readonly HashSet<string> WellKnownImageExtensions = hashSet;
 
     private ImagePanel? _ip;
-    private string? _path;
 
     public int Priority => 0;
 
@@ -57,12 +56,11 @@ public class Plugin : IViewer
 
     public void Prepare(string path, ContextObject context)
     {
-        context.PreferredSize = new Size { Width = 800, Height = 600 };
+        context.SetPreferredSizeFit(new Size { Width = 1200, Height = 800 }, 0.9d);
     }
 
     public void View(string path, ContextObject context)
     {
-        _path = path;
         _ip = new ImagePanel
         {
             ContextObject = context,
@@ -92,7 +90,11 @@ public class Plugin : IViewer
 
             if (_ip is null) return;
 
-            _ip.Dispatcher.Invoke(() => _ip.Source = bitmap);
+            _ip.Dispatcher.Invoke(() =>
+            {
+                _ip.Source = bitmap;
+                _ip.DoZoomToFit();
+            });
 
             //string svg = Path.ChangeExtension(path, ".svg");
             //File.WriteAllBytes(svg, imageData);
@@ -173,7 +175,7 @@ public class Plugin : IViewer
                 using var imageStream = new MemoryStream();
 
                 // Render the SVG picture to a bitmap
-                picture.ToImage(imageStream, SKColors.White, SKEncodedImageFormat.Png, 100, 1.5f, 1.5f, SKColorType.Rgba8888, SKAlphaType.Unpremul, null!);
+                picture.ToImage(imageStream, SKColors.White, SKEncodedImageFormat.Png, 100, 1.8f, 1.8f, SKColorType.Rgba8888, SKAlphaType.Unpremul, null!);
                 return imageStream.ToArray();
             }
         }
