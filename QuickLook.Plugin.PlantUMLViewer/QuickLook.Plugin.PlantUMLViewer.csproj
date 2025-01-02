@@ -69,6 +69,9 @@
 		<RemoveDir Directories="$(OutputPath)\arm64" Condition="Exists('$(OutputPath)\arm64')" />
 		<Delete Files="$(OutputPath)\libHarfBuzzSharp.dylib" Condition="Exists('$(OutputPath)\libHarfBuzzSharp.dylib')" />
 		<Delete Files="$(OutputPath)\libSkiaSharp.dylib" Condition="Exists('$(OutputPath)\libSkiaSharp.dylib')" />
+		<!-- Remove QuickLook.Common.dll -->
+		<Delete Files="$(OutputPath)\QuickLook.Common.dll" Condition="Exists('$(OutputPath)\QuickLook.Common.dll')" />
+		<Delete Files="$(OutputPath)\QuickLook.Common.pdb" Condition="Exists('$(OutputPath)\QuickLook.Common.pdb')" />
 	</Target>
 
 	<ItemGroup>
