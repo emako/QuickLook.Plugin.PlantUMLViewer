@@ -17,6 +17,8 @@
 
 using QuickLook.Common.Helpers;
 using QuickLook.Common.Plugin;
+using SkiaSharp;
+using Svg.Skia;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -88,13 +90,15 @@ public class Plugin : IViewer
             bitmap.EndInit();
             bitmap.Freeze();
 
+            if (_ip is null) return;
+
             _ip.Dispatcher.Invoke(() => _ip.Source = bitmap);
 
             //string svg = Path.ChangeExtension(path, ".svg");
             //File.WriteAllBytes(svg, imageData);
             //_ip.Dispatcher.Invoke(() => _ip.ImageUriSource = Helper.FilePathToFileUrl(svg));
-            context.IsBusy = false;
             context.Title = $"{bitmap.Width}×{bitmap.Height}: {Path.GetFileName(path)}";
+            context.IsBusy = false;
         });
 
         context.ViewerContent = _ip;
@@ -136,7 +140,7 @@ public class Plugin : IViewer
             StartInfo = new ProcessStartInfo()
             {
                 FileName = "java",
-                Arguments = $"-jar {plantUml} -pipe", // -tsvg
+                Arguments = $"-jar {plantUml} -pipe -tsvg", // -tsvg
                 RedirectStandardInput = true,
                 RedirectStandardOutput = true,
                 UseShellExecute = false,
@@ -156,6 +160,26 @@ public class Plugin : IViewer
         while ((bytesRead = process.StandardOutput.BaseStream.Read(buffer, 0, buffer.Length)) > 0)
         {
             ms.Write(buffer, 0, bytesRead);
+        }
+
+        ms.Seek(0, SeekOrigin.Begin);
+
+        try
+        {
+            using var svg = new SKSvg();
+
+            if (svg.Load(ms) is SKPicture picture)
+            {
+                using var imageStream = new MemoryStream();
+
+                // Render the SVG picture to a bitmap
+                picture.ToImage(imageStream, SKColors.White, SKEncodedImageFormat.Png, 100, 1.5f, 1.5f, SKColorType.Rgba8888, SKAlphaType.Unpremul, null!);
+                return imageStream.ToArray();
+            }
+        }
+        catch (Exception e)
+        {
+            ProcessHelper.WriteLog(e.ToString());
         }
 
         return ms.ToArray();

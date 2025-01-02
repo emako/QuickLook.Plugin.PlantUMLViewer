@@ -8,6 +8,7 @@
         <FileAlignment>512</FileAlignment>
         <SignAssembly>false</SignAssembly>
         <UseWPF>true</UseWPF>
+        <UseWindowsForms>true</UseWindowsForms>
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
         <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
@@ -57,11 +58,20 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="System.Memory" Version="4.5.4" />
         <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
+		<PackageReference Include="Svg.Skia" Version="2.0.0.4" />
     </ItemGroup>
 
-    <ItemGroup>
+	<Target Name="ReduceReleasePackaging" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+		<!-- Not support to ARM64 -->
+		<Delete Files="$(OutputPath)\arm64\libHarfBuzzSharp.dll" Condition="Exists('$(OutputPath)\arm64\libHarfBuzzSharp.dll')" />
+		<Delete Files="$(OutputPath)\arm64\libSkiaSharp.dll" Condition="Exists('$(OutputPath)\arm64\libSkiaSharp.dll')" />
+		<RemoveDir Directories="$(OutputPath)\arm64" Condition="Exists('$(OutputPath)\arm64')" />
+		<Delete Files="$(OutputPath)\libHarfBuzzSharp.dylib" Condition="Exists('$(OutputPath)\libHarfBuzzSharp.dylib')" />
+		<Delete Files="$(OutputPath)\libSkiaSharp.dylib" Condition="Exists('$(OutputPath)\libSkiaSharp.dylib')" />
+	</Target>
+
+	<ItemGroup>
         <Resource Include="Resources\background-b.png" />
         <Resource Include="Resources\background.png" />
     </ItemGroup>
