@@ -94,6 +94,7 @@ public class Plugin : IViewer
             //File.WriteAllBytes(svg, imageData);
             //_ip.Dispatcher.Invoke(() => _ip.ImageUriSource = Helper.FilePathToFileUrl(svg));
             context.IsBusy = false;
+            context.Title = $"{bitmap.Width}×{bitmap.Height}: {Path.GetFileName(path)}";
         });
 
         context.ViewerContent = _ip;
