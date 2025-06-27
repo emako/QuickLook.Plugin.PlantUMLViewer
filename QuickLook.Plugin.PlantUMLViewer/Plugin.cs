@@ -34,12 +34,10 @@ namespace QuickLook.Plugin.PlantUMLViewer;
 
 public class Plugin : IViewer
 {
-    private static readonly HashSet<string> hashSet =
+    private static readonly HashSet<string> WellKnownUMLExtensions =
     [
         ".pu", ".puml", ".plantuml", ".wsd", ".iuml",
     ];
-
-    private static readonly HashSet<string> WellKnownImageExtensions = hashSet;
 
     private ImagePanel? _ip;
 
@@ -51,7 +49,7 @@ public class Plugin : IViewer
 
     public bool CanHandle(string path)
     {
-        return WellKnownImageExtensions.Contains(Path.GetExtension(path.ToLower()));
+        return WellKnownUMLExtensions.Contains(Path.GetExtension(path.ToLower()));
     }
 
     public void Prepare(string path, ContextObject context)
@@ -128,8 +126,7 @@ public class Plugin : IViewer
     public static byte[] ViewImageByJar(string path)
     {
         string text = File.ReadAllText(path);
-        byte[] src = Encoding.Default.GetBytes(text);
-
+        byte[] src = Encoding.UTF8.GetBytes(text);
         string plantUml = @".\QuickLook.Plugin\QuickLook.Plugin.PlantUMLViewer\jebbs.plantuml-2.18.1\plantuml.jar";
 
         if (!File.Exists(plantUml))
@@ -142,7 +139,7 @@ public class Plugin : IViewer
             StartInfo = new ProcessStartInfo()
             {
                 FileName = "java",
-                Arguments = $"-jar {plantUml} -pipe -tsvg", // -tsvg
+                Arguments = $"-jar {plantUml} -pipe -tsvg",
                 RedirectStandardInput = true,
                 RedirectStandardOutput = true,
                 UseShellExecute = false,
@@ -206,8 +203,8 @@ file static class Tools
 
         process.Start();
         process.WaitForExit();
-        //var d = process.StandardOutput.ReadToEnd();
-        return process.StandardOutput.ReadToEnd().Length >= 1;
+        var stdout = process.StandardOutput.ReadToEnd();
+        return stdout.Length >= 1;
     }
 }
 
