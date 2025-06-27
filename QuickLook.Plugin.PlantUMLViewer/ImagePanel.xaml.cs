@@ -1,4 +1,4 @@
-﻿// Copyright © 2018 Paddy Xu
+﻿// Copyright © 2017-2025 QL-Win Contributors
 //
 // This file is part of QuickLook program.
 //
@@ -36,9 +36,6 @@ using System.Windows.Threading;
 
 namespace QuickLook.Plugin.PlantUMLViewer;
 
-/// <summary>
-///     Interaction logic for ImagePanel.xaml
-/// </summary>
 public partial class ImagePanel : UserControl, INotifyPropertyChanged, IDisposable
 {
     private Visibility _backgroundVisibility = Visibility.Visible;
