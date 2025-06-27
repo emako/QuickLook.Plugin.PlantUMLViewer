@@ -58,23 +58,24 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
-		<PackageReference Include="Svg.Skia" Version="2.0.0.4" />
+        <PackageReference Include="Svg.Skia" Version="3.0.3">
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
     </ItemGroup>
 
-	<Target Name="ReduceReleasePackaging" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
-		<!-- Not support to ARM64 -->
-		<Delete Files="$(OutputPath)\arm64\libHarfBuzzSharp.dll" Condition="Exists('$(OutputPath)\arm64\libHarfBuzzSharp.dll')" />
-		<Delete Files="$(OutputPath)\arm64\libSkiaSharp.dll" Condition="Exists('$(OutputPath)\arm64\libSkiaSharp.dll')" />
-		<RemoveDir Directories="$(OutputPath)\arm64" Condition="Exists('$(OutputPath)\arm64')" />
-		<Delete Files="$(OutputPath)\libHarfBuzzSharp.dylib" Condition="Exists('$(OutputPath)\libHarfBuzzSharp.dylib')" />
-		<Delete Files="$(OutputPath)\libSkiaSharp.dylib" Condition="Exists('$(OutputPath)\libSkiaSharp.dylib')" />
-		<!-- Remove QuickLook.Common.dll -->
-		<Delete Files="$(OutputPath)\QuickLook.Common.dll" Condition="Exists('$(OutputPath)\QuickLook.Common.dll')" />
-		<Delete Files="$(OutputPath)\QuickLook.Common.pdb" Condition="Exists('$(OutputPath)\QuickLook.Common.pdb')" />
-	</Target>
+    <Target Name="ReduceReleasePackaging" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+        <!-- Not support to ARM64 -->
+        <Delete Files="$(OutputPath)\arm64\libHarfBuzzSharp.dll" Condition="Exists('$(OutputPath)\arm64\libHarfBuzzSharp.dll')" />
+        <Delete Files="$(OutputPath)\arm64\libSkiaSharp.dll" Condition="Exists('$(OutputPath)\arm64\libSkiaSharp.dll')" />
+        <RemoveDir Directories="$(OutputPath)\arm64" Condition="Exists('$(OutputPath)\arm64')" />
+        <Delete Files="$(OutputPath)\libHarfBuzzSharp.dylib" Condition="Exists('$(OutputPath)\libHarfBuzzSharp.dylib')" />
+        <Delete Files="$(OutputPath)\libSkiaSharp.dylib" Condition="Exists('$(OutputPath)\libSkiaSharp.dylib')" />
+        <!-- Remove QuickLook.Common.dll -->
+        <Delete Files="$(OutputPath)\QuickLook.Common.dll" Condition="Exists('$(OutputPath)\QuickLook.Common.dll')" />
+        <Delete Files="$(OutputPath)\QuickLook.Common.pdb" Condition="Exists('$(OutputPath)\QuickLook.Common.pdb')" />
+    </Target>
 
-	<ItemGroup>
+    <ItemGroup>
         <Resource Include="Resources\background-b.png" />
         <Resource Include="Resources\background.png" />
     </ItemGroup>
