@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,7 +50,7 @@ public class Plugin : IViewer
 
     public bool CanHandle(string path)
     {
-        return WellKnownUMLExtensions.Contains(Path.GetExtension(path.ToLower()));
+        return WellKnownUMLExtensions.Contains(Path.GetExtension(path), StringComparer.OrdinalIgnoreCase);
     }
 
     public void Prepare(string path, ContextObject context)
